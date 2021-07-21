@@ -12,6 +12,14 @@ const defaultState = {
         editorState: payload,
       };
     }
+    if (type === 'UPDATE_SEARCH_STATE') {
+      console.log('hello')
+      return {
+        ...state,
+        search: payload
+      }
+    }
+
     return state;
   };
 

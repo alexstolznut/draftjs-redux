@@ -48,3 +48,32 @@
   font-family: 'Open Sans';
   font-size: 90%;
 }
+.search-and-replace {
+  border-radius:25px;
+  border: 1px solid grey;
+  width:50%;
+  display:flex;
+  justify-content: space-between;
+  overflow: hidden;
+  font-size: 20em;
+  /* background: red; */
+}
+.search-and-replace input {
+  width:35%;
+  padding: 2.5%;
+  border: none;
+  border-right: 1px solid grey;
+  font-size: 20px;
+}
+
+.searh-and-replace input,
+.search-and-replace input::-webkit-input-placeholder {
+  font-size: 1.5em;
+}
+
+.search-and-replace > button {
+  width:30%;
+  border:none;
+  padding: 2.5%;
+  font-size: 20px;
+}
