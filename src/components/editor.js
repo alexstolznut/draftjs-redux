@@ -35,7 +35,10 @@ const mapDispatchToProps = (dispatch) => ({
         
     };
     const onChangeReplace = (e) => {
-        // setReplace(e.target.value);
+        const replace = e.target.value;
+        onSaveReplaceState(replace);
+
+        //Implement Replace Code
     }
 
     const onReplace = () => {
