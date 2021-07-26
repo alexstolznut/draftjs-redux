@@ -3,7 +3,17 @@ export const updateEditor = (editorState) => ({
     payload: editorState,
 })
 
-export const highlightEditorText = ({editorState}) => ({
-    type: 'HIGHLIGHT_EDITOR_STATE',
-    payload: {editorState}
+export const highlightEditorText = (highlightEditorState) => ({
+    type: 'UPDATE_HIGHLIGHT_STATE',
+    payload: highlightEditorState,
+});
+
+export const updateSearch = (searchState) => ({
+    type: 'UPDATE_SEARCH_STATE',
+    payload: searchState,
+})
+
+export const updateReplace = (replaceState) => ({
+    type: 'UPDATE_REPLACE_STATE',
+    payload: replaceState
 })

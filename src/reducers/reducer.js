@@ -13,14 +13,30 @@ const defaultState = {
       };
     }
     if (type === 'UPDATE_SEARCH_STATE') {
-      console.log('hello')
+      console.log(payload)
       return {
         ...state,
-        search: payload
+        searchState: payload
+      }
+    }
+    if (type === 'UPDATE_REPLACE_STATE') {
+      console.log(payload)
+      return {
+        ...state,
+        replaceState: payload
+      }
+    }
+
+    if (type === 'UPDATE_HIGHLIGHT_STATE') {
+      console.log(payload)
+      return {
+        ...state,
+        editorState: payload,
       }
     }
 
     return state;
   };
+
 
   export default reducer;

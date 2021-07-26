@@ -77,3 +77,7 @@
   padding: 2.5%;
   font-size: 20px;
 }
+
+.search-and-replace-highlight {
+  background-color: yellow;
+}
