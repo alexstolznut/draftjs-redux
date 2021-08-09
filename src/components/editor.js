@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import { Editor, EditorState, CompositeDecorator } from 'draft-js';
+import { Editor, EditorState, CompositeDecorator, SelectionState, Modifier } from 'draft-js';
 import { connect } from 'react-redux';
-import { updateEditor, highlightEditorText, updateSearch, updateReplace } from '../actions';
+import { updateEditor, highlightEditorText, replaceEditorText, updateSearch, updateReplace } from '../actions';
 import '../App.css';
 import 'draft-js/dist/Draft.css';
 
@@ -13,13 +13,14 @@ const mapDispatchToProps = (dispatch) => ({
     onSaveSearchState: (searchValue) => dispatch(updateSearch(searchValue)),
     onSaveReplaceState: (e) => dispatch(updateReplace(e.target.value)),
     onHighlightEditor: ( highlightEditorState) =>  dispatch(highlightEditorText(highlightEditorState)),
+    onReplaceEditor: (replacementText) => dispatch(replaceEditorText(replacementText)),
 
   });
 
 
 
 
-  function EditorComp({editorState, searchState, replaceState, onSaveEditorState,  onHighlightEditor, onSaveSearchState, onSaveReplaceState}) {
+  function EditorComp({editorState, searchState, replaceState, onSaveEditorState,  onHighlightEditor, onReplaceEditor, onSaveSearchState, onSaveReplaceState}) {
 
 
 
@@ -37,12 +38,49 @@ const mapDispatchToProps = (dispatch) => ({
     const onChangeReplace = (e) => {
         const replace = e.target.value;
         onSaveReplaceState(replace);
-
+        
         //Implement Replace Code
     }
 
-    const onReplace = () => {
-        console.log(`replace "${searchState}" with "${replaceState}"`);
+    const onReplace = (replaceValue) => {
+        const regex = new RegExp(searchState, 'g');
+        //Already have editor state deconstructed 
+        const selectionsToReplace = [];
+        const blockMap = editorState.getCurrentContent().getBlockMap();
+
+        blockMap.forEach((contentBlock) => (
+            findWithRegex(regex, contentBlock, (start,end) => {
+                const blockKey = contentBlock.getKey();
+                const blockSelection = SelectionState
+                .createEmpty(blockKey)
+                .merge({
+                    anchorOffset: start,
+                    focusOffset: end,
+                });
+
+                selectionsToReplace.push(blockSelection);
+            })
+        ));
+
+        let contentState = editorState.getCurrentContent();
+        console.log('selectionState', selectionsToReplace);
+        selectionsToReplace.forEach(selectionState => {
+            contentState = Modifier.replaceText(
+                contentState,
+                selectionState,
+                replaceState,
+            )
+        });
+
+        onReplaceEditor(
+            EditorState.push(
+                editorState,
+                contentState,
+            )
+        );
+
+
+
     }
 
     const findWithRegex = (regex, contentBlock, callback) => {
@@ -94,7 +132,7 @@ const mapDispatchToProps = (dispatch) => ({
                     Replace
                 </button>
             </div>
-            <div>{searchState} and {replaceState}</div>
+            <div>{searchState}  {replaceState}</div>
         </div>
     )
 }

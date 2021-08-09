@@ -8,6 +8,11 @@ export const highlightEditorText = (highlightEditorState) => ({
     payload: highlightEditorState,
 });
 
+export const replaceEditorText = (replacementText) => ({
+    type: 'REPLACE_TEXT_STATE',
+    payload: replacementText,
+});
+
 export const updateSearch = (searchState) => ({
     type: 'UPDATE_SEARCH_STATE',
     payload: searchState,

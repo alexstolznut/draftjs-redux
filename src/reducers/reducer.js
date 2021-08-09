@@ -35,6 +35,14 @@ const defaultState = {
       }
     }
 
+    if (type === 'REPLACE_TEXT_STATE') {
+      console.log(payload)
+      return {
+        ...state,
+        editorState: payload,
+      }
+    }
+
     return state;
   };
 
