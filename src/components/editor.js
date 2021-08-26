@@ -104,6 +104,8 @@ const mapDispatchToProps = (dispatch) => ({
         }])
     };
 
+    const saveContent
+
    
 
     const SearchHighlight = (props) => (
